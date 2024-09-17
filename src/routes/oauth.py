@@ -6,7 +6,8 @@ from flask import redirect, request
 
 import util
 import config
-from app import app
+from app import app, db
+from database import Student
 
 oauth_state = {}
 
@@ -51,10 +52,22 @@ def get_complete():
         headers={"Authorization": f"Bearer {access_token}"},
     ).json()
 
+    print(user_info)
+
     id = user_info["id"]
     name = user_info["name"]
     picture = user_info["picture"]
 
-    # todo database & cookie
+    student = Student.query.filter_by(id=id).first()
 
-    return redirect('/me')
+    if student:
+        return "existing"
+
+
+    # todo cookie
+
+    db.session.add(Student(id, name, picture))
+    db.session.commit()
+
+    return "new"
+    # return redirect('/me')
