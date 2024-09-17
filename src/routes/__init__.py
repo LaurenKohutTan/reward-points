@@ -1,1 +1,1 @@
-from . import oauth
+from . import oauth, static

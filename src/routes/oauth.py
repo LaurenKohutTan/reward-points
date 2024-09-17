@@ -25,7 +25,6 @@ def get_redirect():
 def get_complete():
     code = request.args.get("code")
     state = request.args.get("state")
-    print(code, state)
 
     epoch = time.time()
     old_epoch = oauth_state[state]
@@ -56,4 +55,6 @@ def get_complete():
     name = user_info["name"]
     picture = user_info["picture"]
 
-    return f"id: {id}, name: {name}, picture: {picture}"
+    # todo database & cookie
+
+    return redirect('/me')
