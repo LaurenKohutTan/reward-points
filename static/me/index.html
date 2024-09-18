@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reward Points &mdash; Me</title>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/me/index.js"></script>
+  </head>
+  <body>
+    <div
+      x-data="{ loading: true, info: {} }"
+      x-init="fetch('/api/me')
+            .then(x => x.json()).then(x => {
+                info = x;
+                loading = false;
+
+                if ('msg' in x) {
+                    console.log('Error loading user info: ${x}');
+                    window.location.replace('/');
+                }
+            })"
+    >
+      <p x-show="loading">Loading...</p>
+      <p x-show="!loading && 'msg' in info">
+        You need to sign in first. Redirecting.
+      </p>
+      <div x-show="!loading && !('msg' in info)">
+        <h1>Hello, <span x-text="info.name"></span>!</h1>
+        <img x-bind:src="info.picture" alt="User Avatar" />
+        <p>You have <strong x-text="info.points"></strong> points!</p>
+
+        <br />
+        <a href="/auth/logout">Log Out.</a>
+      </div>
+    </div>
+  </body>
+</html>

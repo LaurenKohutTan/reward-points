@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reward Points</title>
 
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     <link rel="stylesheet" href="style.css" />
-    <script defer src="index.js"></script>
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" x-data="{}">
       <h1>Reward Points</h1>
 
       <!-- Continue with Google -->
       <div class="continue">
-        <button class="gsi-material-button" id="continue-button">
+        <button
+          class="gsi-material-button"
+          @click="window.location.replace('/auth/redirect')"
+        >
           <div class="gsi-material-button-state"></div>
           <div class="gsi-material-button-content-wrapper">
             <div class="gsi-material-button-icon">
