@@ -5,6 +5,7 @@ from app import app
 from database import Student
 import config
 
+# Returns a list of all students if the user is a teacher
 @app.route('/api/students')
 @jwt_required()
 def get_students():

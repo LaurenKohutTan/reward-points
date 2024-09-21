@@ -10,11 +10,15 @@ import config
 from app import app, db
 from database import Student
 
+# The name of the cookie that holds the JWT
+# Don't change this as it's from flask_jwt_extended
 AUTH_COOKIE = 'access_token_cookie'
-COOKIE_DURATION = 60 * 60 * 24 * 30 # one month by default
+# Defines the max age of the cookie in seconds (One month by default)
+COOKIE_DURATION = 60 * 60 * 24 * 30
 
 oauth_state = {}
 
+# Redirects the user to Google's OAuth2 login page
 @app.route("/auth/redirect")
 def get_redirect():
     state = util.random_string(16)
@@ -24,12 +28,14 @@ def get_redirect():
     redirect_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={config.client_id}&redirect_uri={urllib.parse.quote_plus(config.external_url)}/auth/complete&response_type=code&scope=profile&state={state}"
     return redirect(redirect_url)
 
+# Logs the user out by making the cookie expire
 @app.route("/auth/logout")
 def get_logout():
     resp = redirect('/')
     resp.set_cookie(AUTH_COOKIE, '', expires=0)
     return resp
 
+# Completes the OAuth2 flow by exchanging the code for an access token, then fetching the user's information and updating the database
 @app.route("/auth/complete")
 def get_complete():
     # Get the oauth code and state from the query parameters
@@ -77,7 +83,7 @@ def get_complete():
         student.picture = picture
     else:
         db.session.add(Student(id, name, picture))
-    
+
     db.session.commit()
 
     # Redirect to /me with the session token stored as a cookie

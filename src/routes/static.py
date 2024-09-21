@@ -4,6 +4,7 @@ from flask import request, send_file
 
 from app import app
 
+# Serves static files from the 'static' directory
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def asset(path):
