@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reward Points &mdash; Admin</title>
+
+        <script src="//unpkg.com/alpinejs" defer></script>
+
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body>
+        <div
+            x-data="{ loading: true, students: {}, search: '' }"
+            x-init="fetch('/api/students')
+            .then(x => x.json()).then(x => {
+                students = x;
+                loading = false;
+
+                if ('msg' in x) {
+                    console.log('Error loading user info: ${x}');
+                    window.location.replace('/');
+                }
+            })"
+        >
+            <h1 class="center-text">Admin</h1>
+
+            <template x-if="loading">
+                <p class="center">Loading...</p>
+            </template>
+
+            <div x-show="!loading">
+                <div class="continue">
+                    <input
+                        type="text"
+                        x-model="search"
+                        placeholder="Filter by name"
+                    />
+                </div>
+
+                <br />
+                <br />
+                <table>
+                    <thead>
+                        <th>Student</th>
+                        <th>Points</th>
+                        <th>Controls</th>
+                    </thead>
+                    <tbody>
+                        <template x-for="student in students">
+                            <tr
+                                x-show="student.name.toLowerCase().includes(search.toLowerCase())"
+                            >
+                                <td><span x-text="student.name" /></td>
+                                <td><span x-text="student.points" /></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

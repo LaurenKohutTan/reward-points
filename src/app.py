@@ -18,7 +18,3 @@ app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
-
-# see:
-# https://github.com/aspiringLich/amplitude/blob/main/src/routes/auth.rs
-# https://github.com/Sigma-8214/CompSci-RP-Website

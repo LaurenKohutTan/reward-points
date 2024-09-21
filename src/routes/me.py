@@ -6,13 +6,7 @@ from database import Student
 
 @app.route('/api/me')
 @jwt_required()
-def me():
+def get_me():
     id = get_jwt_identity()
     student = Student.query.filter_by(id=id).first()
-
-    return jsonify({
-        "id": student.id,
-        "name": student.name,
-        "picture": student.picture,
-        "points": student.points,
-    })
+    return jsonify(student.as_json())

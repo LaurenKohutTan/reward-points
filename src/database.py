@@ -13,3 +13,11 @@ class Student(db.Model):
         self.name = name
         self.picture = picture
         self.points = 0
+    
+    def as_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "picture": self.picture,
+            "points": self.points,
+        }
