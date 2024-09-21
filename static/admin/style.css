@@ -1,0 +1,26 @@
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid white;
+    padding: 0.5rem;
+}
+
+.control {
+    width: 25px;
+    height: 25px;
+}
+
+.picture-container {
+    display: flex;
+    align-items: center;
+}
+
+.picture {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border-radius: 1px;
+}

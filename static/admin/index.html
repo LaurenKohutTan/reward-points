@@ -8,6 +8,7 @@
         <script src="//unpkg.com/alpinejs" defer></script>
 
         <link rel="stylesheet" href="/style.css" />
+        <link rel="stylesheet" href="/admin/style.css" />
     </head>
     <body>
         <div
@@ -30,7 +31,7 @@
             </template>
 
             <div x-show="!loading">
-                <div class="continue">
+                <div class="flex-center">
                     <input
                         type="text"
                         x-model="search"
@@ -51,8 +52,21 @@
                             <tr
                                 x-show="student.name.toLowerCase().includes(search.toLowerCase())"
                             >
-                                <td><span x-text="student.name" /></td>
-                                <td><span x-text="student.points" /></td>
+                                <td class="picture-container">
+                                    <img
+                                        class="picture"
+                                        :src="student.picture"
+                                    />
+                                    <span x-text="student.name" />
+                                </td>
+                                <td class="center-text">
+                                    <span x-text="student.points" />
+                                </td>
+                                <td>
+                                    <button class="control">+</button>
+                                    <button class="control">-</button>
+                                    <button class="control">🗑</button>
+                                </td>
                             </tr>
                         </template>
                     </tbody>

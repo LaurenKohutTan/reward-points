@@ -1,37 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reward Points</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reward Points</title>
 
-    <script src="//unpkg.com/alpinejs" defer></script>
+        <script src="//unpkg.com/alpinejs" defer></script>
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="/assets/google.css" />
+    </head>
 
-  <body>
-    <div class="container" x-data="{}">
-      <h1>Reward Points</h1>
+    <body>
+        <div class="container" x-data="{}">
+            <h1>Reward Points</h1>
 
-      <!-- Continue with Google -->
-      <div class="continue">
-        <button
-          class="gsi-material-button"
-          @click="window.location.replace('/auth/redirect')"
-        >
-          <div class="gsi-material-button-state"></div>
-          <div class="gsi-material-button-content-wrapper">
-            <div class="gsi-material-button-icon">
-              <img src="google.svg" />
+            <!-- Continue with Google -->
+            <div class="flex-center">
+                <button
+                    class="gsi-material-button"
+                    @click="window.location.replace('/auth/redirect')"
+                >
+                    <div class="gsi-material-button-state"></div>
+                    <div class="gsi-material-button-content-wrapper">
+                        <div class="gsi-material-button-icon">
+                            <img src="/assets/google.svg" />
+                        </div>
+                        <span class="gsi-material-button-contents"
+                            >Continue with Google</span
+                        >
+                        <span style="display: none">Continue with Google</span>
+                    </div>
+                </button>
             </div>
-            <span class="gsi-material-button-contents"
-              >Continue with Google</span
-            >
-            <span style="display: none">Continue with Google</span>
-          </div>
-        </button>
-      </div>
-    </div>
-  </body>
+        </div>
+    </body>
 </html>
