@@ -1,18 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reward Points &mdash; Me</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reward Points &mdash; Me</title>
 
-    <script src="//unpkg.com/alpinejs" defer></script>
+        <script src="//unpkg.com/alpinejs" defer></script>
+        <script src="//unpkg.com/apexcharts"></script>
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+        ></script>
 
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <div
-      x-data="{ loading: true, info: {} }"
-      x-init="fetch('/api/me')
+        <link rel="stylesheet" href="/style.css" />
+        <link rel="stylesheet" href="/me/style.css" />
+    </head>
+    <body>
+        <div
+            x-data="{ loading: true, info: {} }"
+            x-init="fetch('/api/me')
             .then(x => x.json()).then(x => {
                 info = x;
                 loading = false;
@@ -22,19 +32,40 @@
                     window.location.replace('/');
                 }
             })"
-    >
-      <p x-show="loading">Loading...</p>
-      <p x-show="!loading && 'msg' in info">
-        You need to sign in first. Redirecting.
-      </p>
-      <div x-show="!loading && !('msg' in info)">
-        <h1>Hello, <span x-text="info.name"></span>!</h1>
-        <img x-bind:src="info.picture" alt="User Avatar" />
-        <p>You have <strong x-text="info.points"></strong> points!</p>
+        >
+            <div class="top-bar">
+                <p>Reward Points</p>
+                <div class="top-bar-right">
+                    <img :src="info.picture" alt="User Avatar" />
+                    <div
+                        class="log-out"
+                        @click="window.location.replace('/auth/logout')"
+                    >
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+            <br />
 
-        <br />
-        <a href="/auth/logout">Log Out.</a>
-      </div>
-    </div>
-  </body>
+            <p x-show="loading">Loading...</p>
+            <p x-show="!loading && 'msg' in info">
+                You need to sign in first. Redirecting.
+            </p>
+            <div x-show="!loading && !('msg' in info)" class="container">
+                <p>
+                    Hello <span x-text="info.name"></span>, you currently have
+                    <strong x-text="info.points"></strong> reward points! Check
+                    out the
+                    <a href="https://ridgecompsci.net/RewardsInfo/index.html"
+                        >Reward Points Store</a
+                    >
+                    to see what you can purchase with your points.
+                </p>
+            </div>
+            <br />
+
+            <div id="chart"></div>
+            <script src="/me/index.js"></script>
+        </div>
+    </body>
 </html>

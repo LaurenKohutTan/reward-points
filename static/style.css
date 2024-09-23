@@ -11,6 +11,10 @@ h1 {
     font-size: 4em;
 }
 
+a {
+    color: rgb(88, 166, 255);
+}
+
 .flex-center {
     display: flex;
     justify-content: center;
@@ -20,6 +24,6 @@ h1 {
     text-align: center;
 }
 
-.container {
+.title-container {
     width: max-content;
 }
