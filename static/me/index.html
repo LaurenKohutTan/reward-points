@@ -16,6 +16,7 @@
             src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
         ></script>
 
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="stylesheet" href="/style.css" />
         <link rel="stylesheet" href="/me/style.css" />
     </head>
@@ -34,7 +35,10 @@
             })"
         >
             <div class="top-bar">
-                <p>Reward Points</p>
+                <div class="top-bar-left">
+                    <img src="/favicon.png" />
+                    <p>Reward Points</p>
+                </div>
                 <div class="top-bar-right">
                     <img :src="info.picture" alt="User Avatar" />
                     <div
@@ -56,7 +60,10 @@
                     Hello <span x-text="info.name"></span>, you currently have
                     <strong x-text="info.points"></strong> reward points! Check
                     out the
-                    <a href="https://ridgecompsci.net/RewardsInfo/index.html"
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://ridgecompsci.net/RewardsInfo/index.html"
                         >Reward Points Store</a
                     >
                     to see what you can purchase with your points.
@@ -66,6 +73,16 @@
 
             <div id="chart"></div>
             <script src="/me/index.js"></script>
+
+            <hr />
+            <footer>
+                <p>
+                    Last Updated 2024 &bull;
+                    <a href="https://github.com/connorslade/rewards-points">
+                        Source Code
+                    </a>
+                </p>
+            </footer>
         </div>
     </body>
 </html>

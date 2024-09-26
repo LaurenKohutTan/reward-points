@@ -1,3 +1,5 @@
+import datetime
+
 from flask_sqlalchemy import SQLAlchemy
 
 from app import db
@@ -23,5 +25,26 @@ class Student(db.Model):
             "id": self.id,
             "name": self.name,
             "picture": self.picture,
+            "points": self.points,
+        }
+
+# Represents someone gaining or losing points
+class Transaction(db.Model):
+    # The user who gained or lost points
+    user_id = db.Column(db.Text, db.ForeignKey("student.id"), primary_key=True)
+    # The timestamp of the operation
+    date = db.Column(db.DateTime, primary_key=True)
+    # The number of points gained or lost
+    points = db.Column(db.Integer)
+
+    def __init__(self, user_id, points):
+        self.user_id = user_id
+        self.date = datetime.datetime.now()
+        self.points = points
+
+    def as_json(self):
+        return {
+            "user_id": self.user_id,
+            "date": self.date,
             "points": self.points,
         }

@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app import app
@@ -15,3 +15,13 @@ def get_students():
 
     students = Student.query.all()
     return jsonify([student.as_json() for student in students])
+
+@app.route('/api/save', methods=['POST'])
+@jwt_required()
+def post_save():
+    id = get_jwt_identity()
+    if not id in config.teacher_ids:
+        return 'Access Denied', 400
+
+    data = request.get_json()
+    return data
