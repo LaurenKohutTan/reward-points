@@ -1,8 +1,8 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app import app
-from database import Student
+from app import app, db
+from database import Student, Transaction
 import config
 
 # Returns a list of all students if the user is a teacher
@@ -24,4 +24,12 @@ def post_save():
         return 'Access Denied', 400
 
     data = request.get_json()
-    return data
+
+    for id in data:
+        student = Student.query.get(id)
+        if student:
+            student.points += data[id]
+            db.session.add(Transaction(student.id, data[id]))
+    db.session.commit()
+
+    return jsonify(data)

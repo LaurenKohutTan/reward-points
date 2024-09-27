@@ -44,7 +44,6 @@ class Transaction(db.Model):
 
     def as_json(self):
         return {
-            "user_id": self.user_id,
-            "date": self.date,
-            "points": self.points,
+            "date": self.date.strftime("%m/%d/%Y %H:%M:%S"),
+            "delta": self.points,
         }

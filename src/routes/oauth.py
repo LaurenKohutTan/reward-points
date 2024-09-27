@@ -8,7 +8,7 @@ from flask import redirect, request
 import util
 import config
 from app import app, db
-from database import Student
+from database import Student, Transaction
 
 # The name of the cookie that holds the JWT
 # Don't change this as it's from flask_jwt_extended
@@ -76,13 +76,14 @@ def get_complete():
 
     # Insert / update the database with student name and picture
     session = create_access_token(identity=id)
-    student = Student.query.filter_by(id=id).first()
+    student = Student.query.get(id)
 
     if student:
         student.name = name
         student.picture = picture
     else:
         db.session.add(Student(id, name, picture))
+        db.session.add(Transaction(id, 0))
 
     db.session.commit()
 

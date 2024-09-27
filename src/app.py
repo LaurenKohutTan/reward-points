@@ -11,6 +11,7 @@ app.static_folder = "./static"
 
 app.secret_key = secret_key
 app.config["JWT_SECRET_KEY"] = secret_key
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 
 app.config["SQLALCHEMY_DATABASE_URI"] = db_address
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

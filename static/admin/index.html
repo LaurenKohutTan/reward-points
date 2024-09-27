@@ -6,6 +6,7 @@
         <title>Reward Points &mdash; Admin</title>
 
         <script src="//unpkg.com/alpinejs" defer></script>
+        <script src="/admin/index.js"></script>
 
         <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="stylesheet" href="/style.css" />
@@ -13,7 +14,7 @@
     </head>
     <body>
         <div
-            x-data="{ loading: true, students: {}, search: '' }"
+            x-data="{ loading: true, students: {}, modifcations: {}, search: '' }"
             x-init="fetch('/api/students')
             .then(x => x.json()).then(x => {
                 students = x;
@@ -38,6 +39,12 @@
                         x-model="search"
                         placeholder="Filter by name"
                     />
+                    <button
+                        x-show="keys(modifcations) > 0"
+                        @click="save(modifcations)"
+                    >
+                        Save <code x-text="`(${keys(modifcations)})`"></code>
+                    </button>
                 </div>
 
                 <br />
@@ -61,11 +68,24 @@
                                     <span x-text="student.name" />
                                 </td>
                                 <td class="center-text">
-                                    <span x-text="student.points" />
+                                    <span
+                                        x-text="`${
+                                        student.points + (modifcations[student.id] ?? 0)}${(student.id in modifcations) ? '*' : ''}`"
+                                    />
                                 </td>
                                 <td>
-                                    <button class="control">+</button>
-                                    <button class="control">-</button>
+                                    <button
+                                        class="control"
+                                        @click="modify_points(modifcations, student.id, 1)"
+                                    >
+                                        +
+                                    </button>
+                                    <button
+                                        class="control"
+                                        @click="modify_points(modifcations, student.id, -1)"
+                                    >
+                                        -
+                                    </button>
                                     <button class="control">🗑</button>
                                 </td>
                             </tr>

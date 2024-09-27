@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Reward Points &mdash; Me</title>
 
+        <script src="/me/index.js"></script>
         <script src="//unpkg.com/alpinejs" defer></script>
         <script src="//unpkg.com/apexcharts"></script>
         <script
@@ -31,7 +32,10 @@
                 if ('msg' in x) {
                     console.log('Error loading user info: ${x}');
                     window.location.replace('/');
+                    return;
                 }
+
+                init_chart(x.history);
             })"
         >
             <div class="top-bar">
@@ -69,15 +73,13 @@
                     to see what you can purchase with your points.
                 </p>
             </div>
-            <br />
 
             <div id="chart"></div>
-            <script src="/me/index.js"></script>
 
             <hr />
             <footer>
                 <p>
-                    Last Updated 2024 &bull;
+                    Created 2024 &bull;
                     <a href="https://github.com/connorslade/rewards-points">
                         Source Code
                     </a>
