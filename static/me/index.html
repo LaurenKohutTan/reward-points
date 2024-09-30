@@ -23,7 +23,7 @@
     </head>
     <body>
         <div
-            x-data="{ loading: true, info: {} }"
+            x-data="{ loading: true, info: {}, net_gain: 0 }"
             x-init="fetch('/api/me')
             .then(x => x.json()).then(x => {
                 info = x;
@@ -35,7 +35,7 @@
                     return;
                 }
 
-                init_chart(x.history);
+                net_gain = init_chart(x.history);
             })"
         >
             <div class="top-bar">
@@ -44,7 +44,11 @@
                     <p>Reward Points</p>
                 </div>
                 <div class="top-bar-right">
-                    <img :src="info.picture" alt="User Avatar" />
+                    <img
+                        :src="info.picture"
+                        alt="User Avatar"
+                        :title="info.name.full + '\n' + info.email"
+                    />
                     <div
                         class="log-out"
                         @click="window.location.replace('/auth/logout')"
@@ -61,9 +65,9 @@
             </p>
             <div x-show="!loading && !('msg' in info)" class="container">
                 <p>
-                    Hello <span x-text="info.name"></span>, you currently have
-                    <strong x-text="info.points"></strong> reward points! Check
-                    out the
+                    Hello <span x-text="info.name.first"></span>, you currently
+                    have <strong x-text="info.points"></strong> reward points!
+                    Check out the
                     <a
                         target="_blank"
                         rel="noopener noreferrer"
@@ -71,6 +75,10 @@
                         >Reward Points Store</a
                     >
                     to see what you can purchase with your points.
+                </p>
+                <p>
+                    In total, ignoring spent points, you have earned
+                    <span x-text="net_gain"></span> points.
                 </p>
             </div>
 
@@ -80,7 +88,11 @@
             <footer>
                 <p>
                     Created 2024 &bull;
-                    <a href="https://github.com/connorslade/rewards-points">
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/connorslade/rewards-points"
+                    >
                         Source Code
                     </a>
                 </p>

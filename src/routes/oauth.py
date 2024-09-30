@@ -25,7 +25,7 @@ def get_redirect():
     epoch = time.time()
     oauth_state[state] = epoch
 
-    redirect_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={config.client_id}&redirect_uri={urllib.parse.quote_plus(config.external_url)}/auth/complete&response_type=code&scope=profile&state={state}"
+    redirect_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={config.client_id}&redirect_uri={urllib.parse.quote_plus(config.external_url)}/auth/complete&response_type=code&scope=profile email&state={state}"
     return redirect(redirect_url)
 
 # Logs the user out by making the cookie expire
@@ -71,8 +71,14 @@ def get_complete():
     ).json()
 
     id = user_info["id"]
+    email = user_info["email"]
     name = user_info["name"]
+    first = user_info["given_name"]
+    last = user_info["family_name"]
     picture = user_info["picture"]
+
+    if not email.endswith(config.required_email_prefix):
+        return "Invalid email domain. <a href='/'>Go back</a>"
 
     # Insert / update the database with student name and picture
     session = create_access_token(identity=id)
@@ -82,7 +88,7 @@ def get_complete():
         student.name = name
         student.picture = picture
     else:
-        db.session.add(Student(id, name, picture))
+        db.session.add(Student(id, email, first, last, name, picture))
         db.session.add(Transaction(id, 0))
 
     db.session.commit()

@@ -13,7 +13,7 @@ def get_students():
     if not id in config.teacher_ids:
         return 'Access Denied', 400
 
-    students = Student.query.all()
+    students = students = Student.query.filter(Student.id.notin_(config.teacher_ids)).all()
     return jsonify([student.as_json() for student in students])
 
 @app.route('/api/save', methods=['POST'])

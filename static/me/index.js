@@ -1,11 +1,13 @@
 function init_chart(history) {
   let points = 0;
+  let net_gain = 0;
   let data = history.map((x) => {
     points += x.delta;
-    return { x: new Date(x.date).toLocaleString(), y: points };
+    if (x.delta > 0) net_gain += x.delta;
+    return { x: new Date(x.date), y: points };
   });
 
-  data.push({ x: new Date().toLocaleString(), y: points });
+  data.push({ x: new Date(), y: points });
 
   let element = document.querySelector("#chart");
   let chart = new ApexCharts(element, {
@@ -15,6 +17,9 @@ function init_chart(history) {
         data,
       },
     ],
+    xaxis: {
+      type: "datetime",
+    },
     chart: {
       toolbar: {
         show: false,
@@ -36,4 +41,6 @@ function init_chart(history) {
     },
   });
   chart.render();
+
+  return net_gain;
 }

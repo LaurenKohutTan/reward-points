@@ -41,7 +41,8 @@
                     />
                     <button
                         x-show="keys(modifcations) > 0"
-                        @click="save(modifcations)"
+                        @click="loading = true;
+                                save(students, modifcations).then(() => loading = false);"
                     >
                         Save <code x-text="`(${keys(modifcations)})`"></code>
                     </button>
@@ -58,14 +59,14 @@
                     <tbody>
                         <template x-for="student in students">
                             <tr
-                                x-show="student.name.toLowerCase().includes(search.toLowerCase())"
+                                x-show="student.name.full.toLowerCase().includes(search.toLowerCase())"
                             >
                                 <td class="picture-container">
                                     <img
                                         class="picture"
                                         :src="student.picture"
                                     />
-                                    <span x-text="student.name" />
+                                    <span x-text="student.name.full" />
                                 </td>
                                 <td class="center-text">
                                     <span

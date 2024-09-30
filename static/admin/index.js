@@ -7,14 +7,19 @@ function keys(obj) {
   return Object.keys(obj).length;
 }
 
-function save(points) {
-  fetch("/api/save", {
+async function save(students, points) {
+  const response = await fetch("/api/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(points),
-  })
-    .then((x) => x.json())
-    .then((x) => alert(`Saved: ${JSON.stringify(x)}`));
+  });
+  const result = await response.json();
+  for (let key in result) delete points[key];
+
+  const studentsResponse = await fetch("/api/students");
+  const studentsData = await studentsResponse.json();
+  students.length = 0;
+  students.push(...studentsData);
 }
