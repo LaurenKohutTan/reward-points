@@ -13,7 +13,7 @@ def get_students():
     if not id in config.teacher_ids:
         return 'Access Denied', 400
 
-    students = students = Student.query.filter(Student.id.notin_(config.teacher_ids)).all()
+    students = Student.query.filter(Student.id.notin_(config.teacher_ids), Student.active == True).all()
     return jsonify([student.as_json() for student in students])
 
 @app.route('/api/save', methods=['POST'])
@@ -33,3 +33,18 @@ def post_save():
     db.session.commit()
 
     return jsonify(data)
+
+@app.route('/api/delete', methods=['POST'])
+@jwt_required()
+def post_delete():
+    id = get_jwt_identity()
+    if not id in config.teacher_ids:
+        return 'Access Denied', 400
+
+    data = request.get_json()
+    students = Student.query.filter(Student.id.in_(data)).all()
+    for student in students:
+        student.active = False
+    db.session.commit()
+
+    return jsonify([student.id for student in students])

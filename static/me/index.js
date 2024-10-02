@@ -1,3 +1,8 @@
+function error_loading(err) {
+  console.log("Error loading user info: ${err}");
+  window.location.replace("/");
+}
+
 function init_chart(history) {
   let points = 0;
   let net_gain = 0;

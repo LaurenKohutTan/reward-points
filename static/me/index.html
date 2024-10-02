@@ -30,8 +30,7 @@
                 loading = false;
 
                 if ('msg' in x) {
-                    console.log('Error loading user info: ${x}');
-                    window.location.replace('/');
+                    error_loading(x);
                     return;
                 }
 
@@ -64,6 +63,10 @@
                 You need to sign in first. Redirecting.
             </p>
             <div x-show="!loading && !('msg' in info)" class="container">
+                <strong x-show="!info.active"
+                    >You're account has been deactivated.</strong
+                >
+
                 <p>
                     Hello <span x-text="info.name.first"></span>, you currently
                     have <strong x-text="info.points"></strong> reward points!

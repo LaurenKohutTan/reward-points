@@ -23,3 +23,16 @@ async function save(students, points) {
   students.length = 0;
   students.push(...studentsData);
 }
+
+async function deactivate(student) {
+  const msg = `Are you sure you want to deactivate ${student.name.full}'s account?`;
+  if (!confirm(msg)) return;
+
+  const response = await fetch(`/api/delete`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify([student.id]),
+  });
+}
