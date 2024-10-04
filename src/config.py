@@ -12,10 +12,10 @@ db_address = "sqlite:///users.db"
 # The external URL of the server used for oauth
 external_url = "http://localhost:8080"
 # Google OAuth2 client id and secret
-client_id = "416427214351-34b5ajfor3i8mbd13dp7ku3av4tscqlc.apps.googleusercontent.com"
-client_secret = "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"
+client_id = ""
+client_secret = ""
 # Logins with emails that don't end with this will be rejected
-required_email_prefix = "" # @bernardsboe.com
+required_email_prefix = "@bernardsboe.com"
 
 ## [SERVER] ##
 
