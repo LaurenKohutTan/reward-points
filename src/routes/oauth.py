@@ -8,7 +8,7 @@ from flask import redirect, request
 import util
 import config
 from app import app, db
-from database import Student, Transaction
+from database import LegacyPoints, Student, Transaction
 
 # The name of the cookie that holds the JWT
 # Don't change this as it's from flask_jwt_extended
@@ -88,8 +88,14 @@ def get_complete():
         student.name = name
         student.picture = picture
     else:
-        db.session.add(Student(id, email, first, last, name, picture))
-        db.session.add(Transaction(id, 0))
+        # If they had points in the old system, add them to the new system
+        legacy_points = db.session.query(LegacyPoints).filter(LegacyPoints.email == email).first()
+        points = 0
+        if legacy_points:
+            points = legacy_points.points
+
+        db.session.add(Student(id, email, first, last, name, picture, points=points))
+        db.session.add(Transaction(id, points))
 
     db.session.commit()
 

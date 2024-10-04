@@ -20,14 +20,14 @@ class Student(db.Model):
     # If the student has been deleted or not
     active = db.Column(db.Boolean)
 
-    def __init__(self, id, email, first_name, last_name, name, picture):
+    def __init__(self, id, email, first_name, last_name, name, picture, points=0):
         self.id = id
         self.email = email
         self.full_name = name
         self.first_name = first_name
         self.last_name = last_name
         self.picture = picture
-        self.points = 0
+        self.points = points
         self.active = True
 
     def as_json(self):
@@ -63,3 +63,7 @@ class Transaction(db.Model):
             "date": self.date.strftime("%m/%d/%Y %H:%M:%S"),
             "delta": self.points,
         }
+
+class LegacyPoints(db.Model):
+    email = db.Column(db.Text, primary_key=True)
+    points = db.Column(db.Integer)
