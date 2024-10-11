@@ -1,0 +1,24 @@
+# Rename to config.toml to use
+
+# The Google user ids of the teachers (for the /admin page)
+teacher_ids = ['109529716394546071085']
+secret_key = "&Q^B3B4>e.4xs2:;Whbz"
+# Random secret key used for encrypting JWT tokens
+# The address of the database
+db_address = "sqlite:///users.db"
+
+## [OAUTH] ##
+
+# The external URL of the server used for oauth
+external_url = "http://localhost:8080"
+# Google OAuth2 client id and secret
+client_id = ""
+client_secret = ""
+# Logins with emails that don't end with this will be rejected
+required_email_prefix = "" #"@bernardsboe.com"
+
+## [SERVER] ##
+
+debug = true
+host = "localhost"
+port = 8080

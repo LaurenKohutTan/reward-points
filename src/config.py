@@ -1,24 +1,27 @@
-## [ THESE ARE DEBUG VALUES ] ##
+import tomllib
+
+raw_config = open("config.toml").read()
+config = tomllib.loads(raw_config)
 
 # The Google user ids of the teachers (for the /admin page)
-teacher_ids = ['109529716394546071085']
+teacher_ids = config["teacher_ids"]
 # Random secret key used for encrypting JWT tokens
-secret_key = b"&P^B3B4>d;4xs2:n.hbz"
+secret_key = config["secret_key"]
 # The address of the database
-db_address = "sqlite:///users.db"
+db_address = config["db_address"]
 
 ## [OAUTH] ##
 
 # The external URL of the server used for oauth
-external_url = "http://localhost:8080"
+external_url = config["external_url"]
 # Google OAuth2 client id and secret
-client_id = ""
-client_secret = ""
+client_id = config["client_id"]
+client_secret = config["client_secret"]
 # Logins with emails that don't end with this will be rejected
-required_email_prefix = "@bernardsboe.com"
+required_email_prefix = config["required_email_prefix"]
 
 ## [SERVER] ##
 
-host = "localhost"
-port = 8080
-debug = True
+host = config["host"]
+port = config["port"]
+debug = config["debug"]

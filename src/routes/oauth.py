@@ -32,7 +32,7 @@ def get_redirect():
 @app.route("/auth/logout")
 def get_logout():
     resp = redirect('/')
-    resp.set_cookie(AUTH_COOKIE, '', expires=0)
+    resp.set_cookie(AUTH_COOKIE, '', 0)
     return resp
 
 # Completes the OAuth2 flow by exchanging the code for an access token, then fetching the user's information and updating the database
