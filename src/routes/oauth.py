@@ -101,5 +101,5 @@ def get_complete():
 
     # Redirect to /me with the session token stored as a cookie
     response = redirect('/me')
-    response.set_cookie(AUTH_COOKIE, session, max_age=COOKIE_DURATION)
+    response.set_cookie(AUTH_COOKIE, session, COOKIE_DURATION)
     return response
