@@ -99,7 +99,12 @@ def get_complete():
 
     db.session.commit()
 
-    # Redirect to /me with the session token stored as a cookie
-    response = redirect('/me')
+     # Redirect to /admin if the user is a teacher/admin, otherwise redirect to /me
+    if id in config.teacher_ids:
+        response = redirect('/admin')
+    else:
+        response = redirect('/me')
+
+    # Set the session token as a cookie
     response.set_cookie(AUTH_COOKIE, session, COOKIE_DURATION)
     return response
